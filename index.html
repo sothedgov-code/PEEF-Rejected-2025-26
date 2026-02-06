@@ -139,6 +139,7 @@
       <tr>
         <th>Serial</th>
         <th>Student Name</th>
+        <th>Gender</th>
         <th>Father Name</th>
         <th>Address</th>
         <th>Remarks</th>
@@ -165,14 +166,15 @@
       .then(text => {
         const lines = text.trim().split('\n');
         for (let i = 1; i < lines.length; i++) {
-          const [serial, student, father, address, remarks, marks, className] = lines[i].split(',');
-          data.push({ serial, student, father, address, remarks, marks, className });
+          const [serial, student, gender, father, address, remarks, marks, className] = lines[i].split(',');
+          data.push({ serial, student, gender, father, address, remarks, marks, className });
         }
 
         tableBody.innerHTML = data.map(item => `
           <tr style="display:none">
             <td>${item.serial}</td>
             <td>${item.student}</td>
+            <td>${item.gender}</td>
             <td>${item.father}</td>
             <td>${item.address}</td>
             <td>${item.remarks}</td>
@@ -201,13 +203,13 @@
 
       matches.slice(0,8).forEach(item => {
         const div = document.createElement('div');
-        div.textContent = `${item.student} (Father: ${item.father})`;
+        div.textContent = `${item.student} (${item.gender}, Father: ${item.father})`;
         div.onclick = () => {
           searchBox.value = item.student;
           suggestions.style.display = 'none';
           rows.forEach(row => {
             const s = row.cells[1].textContent.toLowerCase();
-            const f = row.cells[2].textContent.toLowerCase();
+            const f = row.cells[3].textContent.toLowerCase();
             row.style.display = (s === item.student.toLowerCase() && f === item.father.toLowerCase()) ? '' : 'none';
           });
         };
